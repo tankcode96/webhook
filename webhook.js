@@ -1,6 +1,7 @@
 let http = require("http");
 
 let server = http.createServer(function (req, res) {
+  console.log('webhook 被调用')
   if (req.method === "POST" && req.url === "/webhook") {
     res.setHeader("Content-type", "application/json");
     res.end(JSON.stringify({ ok: true }));
