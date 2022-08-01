@@ -5,7 +5,7 @@ WORK_PATH='/usr/projects/webrtc-demo-server'
 cd $WORK_PATH
 
 echo "清除可能存在的代码修改"
-git reset --hard head
+git reset --hard
 git clean -f
 
 echo "拉取最新代码"
