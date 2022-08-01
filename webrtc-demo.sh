@@ -15,7 +15,7 @@ echo "开始下载依赖包"
 npm install
 
 echo "开始编译项目"
-npm run build --report
+npm run build:prod --report
 
 echo "开始执行构建"
 docker build -t webrtc-demo:1.0 .
