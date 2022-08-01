@@ -11,6 +11,9 @@ git clean -f
 echo "拉取最新代码"
 git pull origin master
 
+echo "开始下载依赖包"
+npm install
+
 echo "开始执行构建"
 docker build -t webrtc-demo-server:1.0 .
 

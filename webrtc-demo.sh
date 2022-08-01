@@ -11,7 +11,10 @@ git clean -f
 echo "拉取最新代码"
 git pull origin webrtc
 
-echo "编译项目"
+echo "开始下载依赖包"
+npm install
+
+echo "开始编译项目"
 npm run build
 
 echo "开始执行构建"
