@@ -12,11 +12,11 @@ echo "拉取最新代码"
 git pull origin master
 
 echo "开始执行构建"
-docker build -t webrtc-demo-server .
+docker build -t webrtc-demo-server:1.0 .
 
 echo "停止旧容器并删除旧容器"
 docker stop webrtc-demo-server-container
 docker rm webrtc-demo-server-container
 
 echo "启动新容器"
-docker container run -p 3010:3010 --name webrtc-demo-server-container -d webrtc-demo-server
+docker container run -p 3010:3010 --name webrtc-demo-server-container -d webrtc-demo-server:1.0
