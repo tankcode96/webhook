@@ -1,6 +1,6 @@
 #!/bin/bash
 
-WORK_PATH = '/usr/projects/webrtc-demo-server'
+WORK_PATH='/usr/projects/webrtc-demo-server'
 
 cd $WORK_PATH
 
