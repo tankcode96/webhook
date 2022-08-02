@@ -1,5 +1,6 @@
 let http = require("http");
 const { createHmac } = require("crypto");
+const { spawn, ChildProcess } = require("child_process");
 
 // webhook 加密密钥
 const SECRET = "tan6300853";
@@ -24,9 +25,22 @@ let server = http.createServer(function (req, res) {
       if (signature !== sign(body)) {
         return res.end("Not Allowed");
       }
+      res.setHeader("Content-type", "application/json");
+      res.end(JSON.stringify({ ok: true }));
+      // 开始部署
+      if (event === "push") {
+        const payload = JSON.parse(body);
+        const child = spawn("sh", [`./${payload.reposity.name}.sh`]);
+        const buffers = [];
+        child.stdout.on("data", (buffer) => {
+          buffers.push(buffer);
+        });
+        child.stdout.on("end", (buffer) => {
+          const log = Buffer.concat(buffers);
+          console.log(log);
+        });
+      }
     });
-    res.setHeader("Content-type", "application/json");
-    res.end(JSON.stringify({ ok: true }));
   } else {
     res.end("Not Found");
   }
