@@ -19,7 +19,7 @@ let server = http.createServer(function (req, res) {
     req.on("end", () => {
       let body = Buffer.concat(buffers);
       // github 事件
-      let event = req.header["x-github-event"];
+      let event = req.headers["x-github-event"];
       // github传递的签名
       let signature = req.headers["x-hub-signature"];
       if (signature !== sign(body)) {
