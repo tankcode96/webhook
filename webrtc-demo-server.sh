@@ -22,4 +22,4 @@ docker stop webrtc-demo-server-container
 docker rm webrtc-demo-server-container
 
 echo "启动新容器"
-docker container run -p 3010:3010 --name webrtc-demo-server-container -d webrtc-demo-server:1.0
+docker container run -p 80:80 -p 443:443 --name webrtc-demo-server-container -d webrtc-demo-server:1.0
