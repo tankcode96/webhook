@@ -1,4 +1,4 @@
-let http = require("http");
+const http = require("http");
 const { createHmac } = require("crypto");
 const { spawn, ChildProcess } = require("child_process");
 
@@ -9,7 +9,7 @@ function sign(body) {
   return `sha1=${createHmac("sha1", SECRET).update(body).digest("hex")}`;
 }
 
-let server = http.createServer(function (req, res) {
+const server = http.createServer(function (req, res) {
   console.log("webhook 被调用");
   if (req.method === "POST" && req.url === "/webhook") {
     const buffers = [];
@@ -17,11 +17,12 @@ let server = http.createServer(function (req, res) {
       buffers.push(buffer);
     });
     req.on("end", () => {
-      let body = Buffer.concat(buffers);
+      const body = Buffer.concat(buffers);
+      console.log("end: body", body);
       // github 事件
-      let event = req.headers["x-github-event"];
+      const event = req.headers["x-github-event"];
       // github传递的签名
-      let signature = req.headers["x-hub-signature"];
+      const signature = req.headers["x-hub-signature"];
       if (signature !== sign(body)) {
         return res.end("Not Allowed");
       }
@@ -30,6 +31,7 @@ let server = http.createServer(function (req, res) {
       // 开始部署
       if (event === "push") {
         const payload = JSON.parse(body);
+        console.log("end: payload", payload);
         const child = spawn("sh", [`./${payload.repository.name}.sh`]);
         const buffers = [];
         child.stdout.on("data", (buffer) => {

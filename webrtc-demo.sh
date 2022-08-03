@@ -26,3 +26,6 @@ docker rm webrtc-demo-container
 
 echo "启动新容器"
 docker container run -p 80:80 -p 443:443 --name webrtc-demo-container -d webrtc-demo:1.0
+
+echo "开始删除旧镜像"
+docker rmi -f $(docker images | grep "none" | awk '{print $3}')
