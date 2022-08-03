@@ -18,8 +18,8 @@ echo "开始执行构建"
 docker build -t webrtc-demo-server:1.0 .
 
 echo "停止旧容器并删除旧容器"
-docker stop webrtc-demo-server-container:1.0
-docker rm webrtc-demo-server-container:1.0
+docker stop webrtc-demo-server-container
+docker rm webrtc-demo-server-container
 
 echo "启动新容器"
 docker container run -p 80:80 -p 443:443 --name webrtc-demo-server-container -d webrtc-demo-server:1.0
