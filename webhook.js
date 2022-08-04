@@ -19,6 +19,8 @@ const server = http.createServer(function (req, res) {
       chunk += data
     });
     req.on("end", () => {
+      console.log(chunk);
+      console.log(buffers);
       const body = Buffer.concat(buffers);
       // github 事件
       const event = req.headers["x-github-event"];
@@ -31,7 +33,6 @@ const server = http.createServer(function (req, res) {
       res.end(JSON.stringify({ ok: true }));
       // 开始部署
       if (event === "push") {
-        console.log(chunk);
         const payload = JSON.parse(decodeURIComponent(chunk));
         console.log("end: payload", payload);
         const child = spawn("sh", [`./${payload.repository.name}.sh`]);
