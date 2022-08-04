@@ -29,5 +29,5 @@ docker container run --name webrtc-demo-container -d webrtc-demo:1.0
 # docker container run -it -p 80:80 -p 443:443 --name webrtc-demo-container -d webrtc-demo:1.0 /bin/bash
 # docker container run -p 80:80 -p 443:443 --name webrtc-demo-container --rm -d webrtc-demo:1.0
 
-echo "开始删除旧镜像"
-docker rmi -f $(docker images | grep "none" | awk '{print $3}')
+# echo "开始删除旧镜像"
+# docker rmi -f $(docker images | grep "none" | awk '{print $3}')
