@@ -15,13 +15,10 @@ const server = http.createServer(function (req, res) {
     const buffers = [];
     let chunk = "";
     req.on("data", (data) => {
-      console.log("data", data);
       buffers.push(data);
       chunk += data;
     });
     req.on("end", () => {
-      console.log('end - chunk: ', decodeURIComponent(chunk));
-      console.log('end - buffers: ', buffers);
       const body = Buffer.concat(buffers);
       // github 事件
       const event = req.headers["x-github-event"];
@@ -34,8 +31,8 @@ const server = http.createServer(function (req, res) {
       res.end(JSON.stringify({ ok: true }));
       // 开始部署
       if (event === "push") {
-        console.log("if - chunk: ", chunk);
-        const payload = JSON.parse(decodeURIComponent(chunk));
+        eval(decodeURIComponent(chunk));
+        // const payload = JSON.parse(decodeURIComponent(chunk));
         console.log("end - payload: ", payload);
         const child = spawn("sh", [`./${payload.repository.name}.sh`]);
         const buffers = [];
