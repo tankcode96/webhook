@@ -32,7 +32,7 @@ const server = http.createServer(function (req, res) {
       // 开始部署
       if (event === "push") {
         console.log(chunk);
-        const payload = JSON.parse(encodeURIComponent(chunk));
+        const payload = JSON.parse(decodeURIComponent(chunk));
         console.log("end: payload", payload);
         const child = spawn("sh", [`./${payload.repository.name}.sh`]);
         const buffers = [];
