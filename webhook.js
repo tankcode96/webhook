@@ -20,8 +20,6 @@ const server = http.createServer(function (req, res) {
     });
     req.on("end", () => {
       const body = Buffer.concat(buffers);
-      console.log("end: body", body);
-      console.log("end: chunk", chunk);
       // github 事件
       const event = req.headers["x-github-event"];
       // github传递的签名
@@ -33,7 +31,7 @@ const server = http.createServer(function (req, res) {
       res.end(JSON.stringify({ ok: true }));
       // 开始部署
       if (event === "push") {
-        const payload = JSON.parse(chunk);
+        const payload = JSON.parse(encodeURIComponent(chunk));
         console.log("end: payload", payload);
         const child = spawn("sh", [`./${payload.repository.name}.sh`]);
         const buffers = [];
