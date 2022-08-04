@@ -25,7 +25,7 @@ docker stop webrtc-demo-container
 docker rm webrtc-demo-container
 
 echo "启动新容器"
-docker container run -p 80:80 --name webrtc-demo-container -d webrtc-demo:1.0
+docker container run -p 80:80 -p 443:443 --name webrtc-demo-container -d webrtc-demo:1.0
 # docker container run -it -p 80:80 -p 443:443 --name webrtc-demo-container -d webrtc-demo:1.0 /bin/bash
 # docker container run -p 80:80 -p 443:443 --name webrtc-demo-container --rm -d webrtc-demo:1.0
 
