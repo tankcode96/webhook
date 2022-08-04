@@ -1,6 +1,6 @@
 const http = require("http");
 const { createHmac } = require("crypto");
-const { spawn, ChildProcess } = require("child_process");
+const { spawn } = require("child_process");
 
 // webhook 加密密钥
 const SECRET = "tan6300853";
@@ -13,12 +13,15 @@ const server = http.createServer(function (req, res) {
   console.log("webhook 被调用");
   if (req.method === "POST" && req.url === "/webhook") {
     const buffers = [];
-    req.on("data", (buffer) => {
-      buffers.push(buffer);
+    let chunk = ''
+    req.on("data", (data) => {
+      buffers.push(data);
+      chunk += data
     });
     req.on("end", () => {
       const body = Buffer.concat(buffers);
       console.log("end: body", body);
+      console.log("end: chunk", chunk);
       // github 事件
       const event = req.headers["x-github-event"];
       // github传递的签名
@@ -30,7 +33,7 @@ const server = http.createServer(function (req, res) {
       res.end(JSON.stringify({ ok: true }));
       // 开始部署
       if (event === "push") {
-        const payload = JSON.parse(body);
+        const payload = JSON.parse(chunk);
         console.log("end: payload", payload);
         const child = spawn("sh", [`./${payload.repository.name}.sh`]);
         const buffers = [];
