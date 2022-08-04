@@ -15,11 +15,12 @@ const server = http.createServer(function (req, res) {
     const buffers = [];
     let chunk = ''
     req.on("data", (data) => {
+      console.log('data', data);
       buffers.push(data);
       chunk += data
     });
     req.on("end", () => {
-      console.log(chunk);
+      console.log(decodeURIComponent(chunk));
       console.log(buffers);
       const body = Buffer.concat(buffers);
       // github 事件
