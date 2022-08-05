@@ -17,15 +17,18 @@ npm install
 echo "开始编译项目"
 npm run build
 
-echo "开始执行构建"
-docker build -t webrtc-demo:1.0 .
-
 echo "停止旧容器并删除旧容器"
 docker stop webrtc-demo-container
 docker rm webrtc-demo-container
 
+echo "删除旧镜像"
+docker rmi -f webrtc-demo:1.0
+
+echo "开始构建新镜像"
+docker build -t webrtc-demo:1.0 .
+
 echo "启动新容器"
-docker container run -p 80:80 -p 443:443 --name webrtc-demo-container -d webrtc-demo:1.0
+docker container run -p 80:80 -p 443:443 -d --name webrtc-demo-container webrtc-demo:1.0
 # docker container run -it -p 80:80 -p 443:443 --name webrtc-demo-container -d webrtc-demo:1.0 /bin/bash
 # docker container run -p 80:80 -p 443:443 --name webrtc-demo-container --rm -d webrtc-demo:1.0
 
