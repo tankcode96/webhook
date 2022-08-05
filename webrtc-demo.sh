@@ -28,7 +28,7 @@ echo "开始构建新镜像"
 docker build -t webrtc-demo:1.0 .
 
 echo "启动新容器"
-docker container run -p 80:80 -p 443:443 -d --name webrtc-demo-container webrtc-demo:1.0
+docker container run -p 80:80 -p 443:443 --name webrtc-demo-container -d webrtc-demo:1.0
 # docker container run -it -p 80:80 -p 443:443 --name webrtc-demo-container -d webrtc-demo:1.0 /bin/bash
 # docker container run -p 80:80 -p 443:443 --name webrtc-demo-container --rm -d webrtc-demo:1.0
 
