@@ -31,8 +31,7 @@ const server = http.createServer(function (req, res) {
       res.end(JSON.stringify({ ok: true }));
       // 开始部署
       if (event === "push") {
-        console.log(decodeURIComponent(chunk));
-        eval(decodeURIComponent(chunk));
+        const payload = decodeURIComponent(chunk);
         console.log('触发的repository: ', payload.repository.name);
         const child = spawn("sh", [`./${payload.repository.name}.sh`]);
         const buffers = [];
