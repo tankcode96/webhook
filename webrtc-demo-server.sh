@@ -14,15 +14,15 @@ git pull origin master
 echo "开始下载依赖包"
 npm install
 
-echo "开始执行构建"
-docker build -t webrtc-demo-server:1.0 .
-
 echo "停止旧容器并删除旧容器"
 docker stop webrtc-demo-server-container
 docker rm webrtc-demo-server-container
 
-echo "启动新容器"
-docker container run -p 3010:3010 --name webrtc-demo-server-container -d webrtc-demo-server:1.0
+echo "删除旧镜像"
+docker rmi -f webrtc-demo-server:1.0
 
-echo "开始删除旧镜像"
-docker rmi -f $(docker images | grep "none" | awk '{print $3}')
+echo "开始构建新镜像"
+docker build -t webrtc-demo-server:1.0 .
+
+echo "启动新容器"
+docker container run --name webrtc-demo-server-container -p 3010:3010 -v /usr/local/nginx/ssl:/etc/nginx/ssl/ -d webrtc-demo-server:1.0
